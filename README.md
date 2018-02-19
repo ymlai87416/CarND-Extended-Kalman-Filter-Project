@@ -84,12 +84,27 @@ Matlab scripts that can generate additional data.
 
 ## Project Instructions and Rubric
 
-Note: regardless of the changes you make, your project must be buildable using
-cmake and make!
+### Your code should compile
+Refer to the instruction in section "Basic Build Instructions" to compile the code and run.
 
-More information is only accessible by people who are already enrolled in Term 2
-of CarND. If you are enrolled, see [the project resources page](https://classroom.udacity.com/nanodegrees/nd013/parts/40f38239-66b6-46ec-ae68-03afd8a601c8/modules/0949fca6-b379-42af-a919-ee50aa304e6a/lessons/f758c44c-5e40-4e01-93b5-1a82aa4e044f/concepts/382ebfd6-1d55-4487-84a5-b6a5a4ba1e47)
-for instructions and the project rubric.
+### Accuracy
+
+
+
+### Processing flow of the Sensor Fusion algorithm
+
+
+### Handle the first measurement
+
+
+### Predict and update loop
+
+### Handling Radar and Lidar measurement
+
+### Code efficiency
+
+### Performance analysis (Combined vs Lidar vs Radar)
+
 
 ## Hints and Tips!
 

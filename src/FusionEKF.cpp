@@ -56,8 +56,8 @@ FusionEKF::FusionEKF() {
     update_F(F_, 0);
 
     P_ = MatrixXd(4, 4);
-    P_ << initial_conv, 0, 0, 0,
-          0, initial_conv, 0, 0,
+    P_ << 1, 0, 0, 0,
+          0, 1, 0, 0,
           0, 0, initial_conv, 0,
           0, 0, 0, initial_conv;
 
@@ -88,12 +88,14 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
           * Create the covariance matrix.
           * Remember: you'll need to convert radar from polar to cartesian coordinates.
         */
-        cout << "EKF: " << endl;
+
 
         if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
             /**
             Convert radar from polar to cartesian coordinates and initialize state.
             */
+            cout << "EKF initialized with RADAR: " << endl;
+
             float rho, phi, rho_dot, px, py;
             rho = measurement_pack.raw_measurements_[0];
             phi = measurement_pack.raw_measurements_[1];
@@ -102,12 +104,14 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
             px = rho * cos(phi);
             py = rho * sin(phi);
 
-            ekf_.x_ << px, py, 0, 0;
+            ekf_.x_ << px, py, rho_dot * cos(phi), rho_dot * sin(phi);
         }
         else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
             /**
             Initialize state.
             */
+            cout << "EKF initialized with LIDAR: " << endl;
+
             float px, py;
             px = measurement_pack.raw_measurements_[0];
             py = measurement_pack.raw_measurements_[1];
