@@ -8,6 +8,11 @@ using Eigen::MatrixXd;
 using Eigen::VectorXd;
 using std::vector;
 
+#define DBGMSG( os, msg ) {}
+
+#define NDBGMSG( os, msg ) \
+  (os) << msg << std::endl
+
 /*
  * Constructor.
  */
@@ -94,7 +99,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
             /**
             Convert radar from polar to cartesian coordinates and initialize state.
             */
-            cout << "EKF initialized with RADAR: " << endl;
+            DBGMSG(cout, "EKF initialized with RADAR: " );
 
             float rho, phi, rho_dot, px, py;
             rho = measurement_pack.raw_measurements_[0];
@@ -110,7 +115,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
             /**
             Initialize state.
             */
-            cout << "EKF initialized with LIDAR: " << endl;
+            DBGMSG(cout, "EKF initialized with LIDAR: " );
 
             float px, py;
             px = measurement_pack.raw_measurements_[0];
@@ -124,8 +129,8 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
         is_initialized_ = true;
         previous_timestamp_ = measurement_pack.timestamp_;
 
-        cout << "x_ (initialize) = " << ekf_.x_ << endl;
-        cout << "P_ (initialize) = " << ekf_.P_ << endl;
+        DBGMSG(cout, "x_ (initialize) = " << ekf_.x_ );
+        DBGMSG(cout, "P_ (initialize) = " << ekf_.P_ );
 
         return;
     }
@@ -163,17 +168,17 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
         // Radar updates
         Hj_ = tools.CalculateJacobian(ekf_.x_);
         if(!isinf(Hj_(0, 0))) {
-            cout << "RADAR" << endl;
+            DBGMSG(cout, "RADAR" );
             ekf_.H_ = Hj_;
             ekf_.R_ = R_radar_;
             ekf_.h_ = &FusionEKF::getZPredictRadar;
             ekf_.UpdateEKF(measurement_pack.raw_measurements_);
         }
         else
-            cout << "RADAR skipped" << endl;
+            DBGMSG(cout, "RADAR skipped" );
 
     } else {
-        cout << "LIDAR" << endl;
+        DBGMSG(cout, "LIDAR" );
         // Laser updatesmeas_package.sensor_type_ = MeasurementPackage::LASER;
         ekf_.H_ = H_laser_;
         ekf_.R_ = R_laser_;
@@ -181,8 +186,8 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     }
 
     // print the output
-    cout << "x_ = " << ekf_.x_ << endl;
-    cout << "P_ = " << ekf_.P_ << endl;
+    DBGMSG(cout, "x_ = " << ekf_.x_ );
+    DBGMSG(cout, "P_ = " << ekf_.P_ );
 }
 
 void FusionEKF::update_F(Eigen::MatrixXd& F_, float dt) {

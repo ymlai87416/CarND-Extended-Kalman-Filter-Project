@@ -1,3 +1,15 @@
+[//]: # (Image References)
+
+[image1]: ./output/RMSE_position.png "RMSE position"
+[image2]: ./output/RMSE_velocity.png "RMSE velocity"
+[image3]: ./output/dataset1_result.png "Dataset 1 final RMSE"
+[image4]: ./output/dataset2_result.png "Dataset 2 final RMSE"
+[image5]: ./output/dataset1_lidarOnly_result.png "Dataset1 update using Lidar only"
+[image6]: ./output/dataset1_radarOnly_result.png "Dataset1 update using Radar only"
+[image7]: ./output/dataset2_lidarOnly_result.png "Dataset2 update using Lidar only"
+[image8]: ./output/dataset2_radarOnly_result.png "Dataset2 update using Radar only"
+
+
 # Extended Kalman Filter Project Starter Code
 Self-Driving Car Engineer Nanodegree Program
 
@@ -88,13 +100,24 @@ Matlab scripts that can generate additional data.
 Refer to the instruction in section "Basic Build Instructions" to compile the code and run.
 
 ### Accuracy
+Here is the accuracy from the test result.
 
+#### Dataset 1
+
+![alt text][image1]
+
+#### Dataset 2
+
+![alt text][image2]
 
 
 ### Processing flow of the Sensor Fusion algorithm
 
 
 ### Handle the first measurement
+The initial measurement can be taken from Lidar data and Radar data.
+For lidar data, simply set 
+
 
 
 ### Predict and update loop
