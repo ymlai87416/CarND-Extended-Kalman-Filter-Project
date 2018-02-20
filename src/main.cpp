@@ -140,7 +140,7 @@ int main()
 
                 }
             } else {
-
+skip:
                 std::string msg = "42[\"manual\",{}]";
                 ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
             }

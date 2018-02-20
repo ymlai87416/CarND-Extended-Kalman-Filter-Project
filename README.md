@@ -168,24 +168,60 @@ what the actual x is over the 4 dimensional space (x, y, vx, vy).
 Then the fusion sensor, in the update part, uses the measured values from sensors to come up with a more precise prediction.
 
 When processing measurements from lidar sensor, normal Kalman filter is used.
+
 ![alt text][image14]
 
 where H is a matrix or a linear function of transforming the internal state x to the measurement. H is of the following form.
+
 ![alt text][image17]
 
 
 When processing measurements from radar sensor, extended Kalman filter is used because H is not a linear function.
+
 ![alt text][image18]
 
 function h takes the following form
+
 ![alt text][image19]
 
 where Hj is the Jacobian matrix of function H, and have the following form.
+
 ![alt text][image20]
 
 
 ### Performance analysis (Combined vs Lidar vs Radar)
+#### Dataset 1
 
+Lidar only performance
+
+![alt text][image5]
+
+Radar only performance
+
+![alt text][image6]
+
+Lidar and Radar performance
+
+![alt text][image3]
+
+#### Dataset 2
+
+Lidar only performance
+
+![alt text][image7]
+
+Radar only performance
+
+![alt text][image8]
+
+Lidar and Radar performance
+
+![alt text][image4]
+
+#### Conclusion
+From the above 2 dataset, we can see that using both lidar and radar readings as input to the fusion sensor helps 
+fusion sensor to make accurate prediction. It is not suprise because the ladar and radar measurements come after each 
+other after 0.5 seconds. Using only lidar or radar measurement half the sample frequency, and hence 
 
 ## Hints and Tips!
 
