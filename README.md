@@ -8,7 +8,18 @@
 [image6]: ./output/dataset1_radarOnly_result.png "Dataset1 update using Radar only"
 [image7]: ./output/dataset2_lidarOnly_result.png "Dataset2 update using Lidar only"
 [image8]: ./output/dataset2_radarOnly_result.png "Dataset2 update using Radar only"
-
+[image9]: ./output/process_flow.png "Process flow"
+[image10]: ./output/lidar_init.png "Lidar initialization"
+[image11]: ./output/radar_init.png "Radar initialization"
+[image12]: ./output/P_matrix.png "P matrix"
+[image13]: ./output/prediction_formula.png "Prediction"
+[image14]: ./output/update_formula.png "Update"
+[image15]: ./output/f_equation.png "F matrix"
+[image16]: ./output/q_equation.png "Q matrix"
+[image17]: ./output/h_equation.png "H matrix"
+[image18]: ./output/extend_update_formula.png "Update EKF"
+[image19]: ./output/radar_h_equation.png "Radar transformation equation"
+[image20]: ./output/hj_equation.png "Hj matrix"
 
 # Extended Kalman Filter Project Starter Code
 Self-Driving Car Engineer Nanodegree Program
@@ -106,25 +117,72 @@ Here is the accuracy from the test result.
 
 ![alt text][image1]
 
-#### Dataset 2
-
 ![alt text][image2]
 
 
 ### Processing flow of the Sensor Fusion algorithm
 
+The program reads from both lidar and radar sensors for input.
+First, in the Predict stage, the EKF (extended Kalman filter) predicts the position and velocity of the car using a model. (In this project, I use Constant velocity model)
+Then, in the Update stage, EKF uses the lidar or radar input values to update the position and velocity of the car.
+By doing so, it reduce the effect of noise from the lidar and radar sensors.
+
+The picture below shows the working mechanism of the EKF.
+
+![alt text][image9]
 
 ### Handle the first measurement
 The initial measurement can be taken from Lidar data and Radar data.
-For lidar data, simply set 
+
+For lidar data (x, y), set 
+
+![alt text][image10]
+
+For radar data (rho, phi, rho_head), set
+ 
+![alt text][image11]
+
+The initial covariance matrix P is
+
+![alt text][image12]
 
 
+### Predict and update loop, and handling Radar and Lidar measurement
 
-### Predict and update loop
+After the initialization part, all the lidar and radar readings go through the predict
+and update loop.
 
-### Handling Radar and Lidar measurement
+The prediction part equation is as follow:
 
-### Code efficiency
+![alt text][image13]
+
+Where F and Q are of matrices in following forms: 
+
+![alt text][image15]
+
+![alt text][image16]
+
+In this part, the fusion sensor return it estimate x and P, which describe the probability that 
+what the actual x is over the 4 dimensional space (x, y, vx, vy).  
+
+Then the fusion sensor, in the update part, uses the measured values from sensors to come up with a more precise prediction.
+
+When processing measurements from lidar sensor, normal Kalman filter is used.
+![alt text][image14]
+
+where H is a matrix or a linear function of transforming the internal state x to the measurement. H is of the following form.
+![alt text][image17]
+
+
+When processing measurements from radar sensor, extended Kalman filter is used because H is not a linear function.
+![alt text][image18]
+
+function h takes the following form
+![alt text][image19]
+
+where Hj is the Jacobian matrix of function H, and have the following form.
+![alt text][image20]
+
 
 ### Performance analysis (Combined vs Lidar vs Radar)
 
