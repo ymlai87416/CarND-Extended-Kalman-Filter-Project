@@ -21,7 +21,7 @@
 [image19]: ./output/radar_h_equation.png "Radar transformation equation"
 [image20]: ./output/hj_equation.png "Hj matrix"
 
-# Extended Kalman Filter Project Starter Code
+# Extended Kalman Filter Project
 Self-Driving Car Engineer Nanodegree Program
 
 In this project you will utilize a kalman filter to estimate the state of a moving object of interest with noisy lidar and radar measurements. Passing the project requires obtaining RMSE values that are lower that the tolerance outlined in the project rubric. 
@@ -97,14 +97,6 @@ using the following settings:
 
 Please (do your best to) stick to [Google's C++ style guide](https://google.github.io/styleguide/cppguide.html).
 
-## Generating Additional Data
-
-This is optional!
-
-If you'd like to generate your own radar and lidar data, see the
-[utilities repo](https://github.com/udacity/CarND-Mercedes-SF-Utilities) for
-Matlab scripts that can generate additional data.
-
 ## Project Instructions and Rubric
 
 ### Your code should compile
@@ -115,6 +107,12 @@ Here is the accuracy from the test result.
 
 #### Dataset 1
 
+The final RMSE is px=0.0973, py=0.0855, vx=0.4513 and vy=0.4399
+
+![alt text][image3]
+
+The following graph shows how RMSE of px, py, vx and vy converge over time.
+
 ![alt text][image1]
 
 ![alt text][image2]
@@ -122,8 +120,8 @@ Here is the accuracy from the test result.
 
 ### Processing flow of the Sensor Fusion algorithm
 
-The program reads from both lidar and radar sensors for input.
-First, in the Predict stage, the EKF (extended Kalman filter) predicts the position and velocity of the car using a model. (In this project, I use Constant velocity model)
+The sensor fusion algorithm reads from both lidar and radar sensors for input.
+First, in the Predict stage, the EKF (extended Kalman filter) predicts the position and velocity of the car using a given model. (In this project, I use Constant velocity model)
 Then, in the Update stage, EKF uses the lidar or radar input values to update the position and velocity of the car.
 By doing so, it reduce the effect of noise from the lidar and radar sensors.
 
@@ -152,7 +150,7 @@ The initial covariance matrix P is
 After the initialization part, all the lidar and radar readings go through the predict
 and update loop.
 
-The prediction part equation is as follow:
+The equations of the prediction part are as follow:
 
 ![alt text][image13]
 
@@ -162,16 +160,17 @@ Where F and Q are of matrices in following forms:
 
 ![alt text][image16]
 
-In this part, the fusion sensor return it estimate x and P, which describe the probability that 
-what the actual x is over the 4 dimensional space (x, y, vx, vy).  
+At this stage, the EKF returns it estimate of x and P, which describe the probability that 
+what the actual position and velocity of the car are.  
 
-Then the fusion sensor, in the update part, uses the measured values from sensors to come up with a more precise prediction.
+Then EKF, in the update part, uses the measured values from sensors to come up with a more precise prediction.
 
 When processing measurements from lidar sensor, normal Kalman filter is used.
 
 ![alt text][image14]
 
-where H is a matrix or a linear function of transforming the internal state x to the measurement. H is of the following form.
+where H is a matrix or a linear function of transforming the internal state (px, py, vx, vy) to the measurement (px, py).
+H is of the following form.
 
 ![alt text][image17]
 
@@ -221,44 +220,6 @@ Lidar and Radar performance
 #### Conclusion
 From the above 2 dataset, we can see that using both lidar and radar readings as input to the fusion sensor helps 
 fusion sensor to make accurate prediction. It is not surprise because the lidar and radar measurements come after each 
-other after 0.5 seconds. Using only lidar or radar measurement half the sample frequency, and hence the error, in average, increase.
+other after 0.5 seconds. Using only lidar or radar measurement half the sampling frequency, and hence the error increases.
 
-In the case which lidar or radar is used alone. Lidar give a better final RMSE in both dataset (especially true for predicting x and y).
-
-
-## Hints and Tips!
-
-* You don't have to follow this directory structure, but if you do, your work
-  will span all of the .cpp files here. Keep an eye out for TODOs.
-* Students have reported rapid expansion of log files when using the term 2 simulator.  This appears to be associated with not being connected to uWebSockets.  If this does occur,  please make sure you are conneted to uWebSockets. The following workaround may also be effective at preventing large log files.
-
-    + create an empty log file
-    + remove write permissions so that the simulator can't write to log
- * Please note that the ```Eigen``` library does not initialize ```VectorXd``` or ```MatrixXd``` objects with zeros upon creation.
-
-## Call for IDE Profiles Pull Requests
-
-Help your fellow students!
-
-We decided to create Makefiles with cmake to keep this project as platform
-agnostic as possible. Similarly, we omitted IDE profiles in order to we ensure
-that students don't feel pressured to use one IDE or another.
-
-However! We'd love to help people get up and running with their IDEs of choice.
-If you've created a profile for an IDE that you think other students would
-appreciate, we'd love to have you add the requisite profile files and
-instructions to ide_profiles/. For example if you wanted to add a VS Code
-profile, you'd add:
-
-* /ide_profiles/vscode/.vscode
-* /ide_profiles/vscode/README.md
-
-The README should explain what the profile does, how to take advantage of it,
-and how to install it.
-
-Regardless of the IDE used, every submitted project must
-still be compilable with cmake and make.
-
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
-
+In the case which lidar or radar is used alone. Lidar give a better final RMSE in both dataset (especially true for predicting px and py).
