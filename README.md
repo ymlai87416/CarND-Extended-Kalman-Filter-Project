@@ -220,8 +220,11 @@ Lidar and Radar performance
 
 #### Conclusion
 From the above 2 dataset, we can see that using both lidar and radar readings as input to the fusion sensor helps 
-fusion sensor to make accurate prediction. It is not suprise because the ladar and radar measurements come after each 
-other after 0.5 seconds. Using only lidar or radar measurement half the sample frequency, and hence 
+fusion sensor to make accurate prediction. It is not surprise because the lidar and radar measurements come after each 
+other after 0.5 seconds. Using only lidar or radar measurement half the sample frequency, and hence the error, in average, increase.
+
+In the case which lidar or radar is used alone. Lidar give a better final RMSE in both dataset (especially true for predicting x and y).
+
 
 ## Hints and Tips!
 
