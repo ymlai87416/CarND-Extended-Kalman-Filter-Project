@@ -160,22 +160,22 @@ Where F and Q are of matrices in following forms:
 
 ![alt text][image16]
 
-At this stage, the EKF returns it estimate of x and P, which describe the probability that 
+At this stage, the EKF returns its estimate of x and P, which describe the probability that 
 what the actual position and velocity of the car are.  
 
 Then EKF, in the update part, uses the measured values from sensors to come up with a more precise prediction.
 
-When processing measurements from lidar sensor, normal Kalman filter is used.
+When processing measurements from lidar sensor, Kalman filter is used.
 
 ![alt text][image14]
 
 where H is a matrix or a linear function of transforming the internal state (px, py, vx, vy) to the measurement (px, py).
-H is of the following form.
+H has the following form.
 
 ![alt text][image17]
 
 
-When processing measurements from radar sensor, extended Kalman filter is used because H is not a linear function.
+When processing measurements from radar sensor, extended Kalman filter is used because h is not a linear function.
 
 ![alt text][image18]
 
@@ -183,7 +183,7 @@ function h takes the following form
 
 ![alt text][image19]
 
-where Hj is the Jacobian matrix of function H, and have the following form.
+where Hj is the Jacobian matrix of function h, and has the following form.
 
 ![alt text][image20]
 
@@ -218,7 +218,7 @@ Lidar and Radar performance
 ![alt text][image4]
 
 #### Conclusion
-From the above 2 dataset, we can see that using both lidar and radar readings as input to the fusion sensor helps 
+From the above 2 datasets, we can see that using both lidar and radar readings as input to the fusion sensor helps 
 fusion sensor to make accurate prediction. It is not surprise because the lidar and radar measurements come after each 
 other after 0.5 seconds. Using only lidar or radar measurement half the sampling frequency, and hence the error increases.
 
